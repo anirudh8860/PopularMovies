@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Popular Movies</string>
+    <string name="font_size_large">20sp</string>
+    <string name="font_size_small">15sp</string>
+</resources>
