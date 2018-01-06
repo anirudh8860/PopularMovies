@@ -61,8 +61,10 @@ public class Home extends AppCompatActivity {
             notConnectedText.setVisibility(View.GONE);
             new FetchMovieClass().execute(popularMovieUrl);
         }
-        else
+        else {
             notConnectedText.setVisibility(View.VISIBLE);
+            gridView.setVisibility(View.GONE);
+        }
     }
 
     public void showTopRatedMovies(){
@@ -70,8 +72,10 @@ public class Home extends AppCompatActivity {
             notConnectedText.setVisibility(View.GONE);
             new FetchMovieClass().execute(topRatedMovieUrl);
         }
-        else
+        else {
             notConnectedText.setVisibility(View.VISIBLE);
+            gridView.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -96,9 +100,8 @@ public class Home extends AppCompatActivity {
     }
 
     public boolean isOnline() {
-        ConnectivityManager cm =
-                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = connectivityManager.getActiveNetworkInfo();
         return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
@@ -126,6 +129,7 @@ public class Home extends AppCompatActivity {
         @Override
         protected void onPostExecute(String[] movieJsonArray) {
             super.onPostExecute(movieJsonArray);
+            gridView.setVisibility(View.VISIBLE);
             moviesData = new String[movieJsonArray.length];
             outputArray = new String[movieJsonArray.length];
             outputArray = movieJsonArray;
