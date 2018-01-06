@@ -2,4 +2,9 @@
     <string name="app_name">Popular Movies</string>
     <string name="font_size_large">20sp</string>
     <string name="font_size_small">15sp</string>
+    <string name="title_str">TITLE:</string>
+    <string name="rating_str">RATING:</string>
+    <string name="release_date_str">RELEASE DATE:</string>
+    <string name="plot_str">PLOT:</string>
+    <string name="conn_error_str">CONNECT TO INTERNET TO DISPLAY MOVIES</string>
 </resources>

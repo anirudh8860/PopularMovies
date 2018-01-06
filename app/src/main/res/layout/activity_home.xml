@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20sp"
-        android:text="CONNECT TO INTERNET TO DISPLAY MOVIES"
+        android:text="@string/conn_error_str"
         android:gravity="center"
         android:visibility="invisible"/>
     <GridView
