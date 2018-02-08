@@ -7,4 +7,6 @@
     <string name="release_date_str">RELEASE DATE:</string>
     <string name="plot_str">PLOT:</string>
     <string name="conn_error_str">CONNECT TO INTERNET TO DISPLAY MOVIES</string>
+    <string name="reviews">REVIEWS:</string>
+    <string name="trailer">TRAILER:</string>
 </resources>

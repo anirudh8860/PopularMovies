@@ -24,8 +24,8 @@ import java.util.Arrays;
 public class Home extends AppCompatActivity {
 
     private final String POPULAR_URL = "http://api.themoviedb.org/3/movie/popular";
-
     private final String TOP_RATED_URL = "http://api.themoviedb.org/3/movie/top_rated";
+
     private String[] outputArray, moviesData;
     GridView gridView;
     private ProgressBar loadingIndicator;
@@ -142,7 +142,7 @@ public class Home extends AppCompatActivity {
 //                    for (int p = 0; p < reqData.length; p++)
 //                        Log.d("URL", p+":"+reqData[p]);
 //                    Log.d("URL", reqData[1]);
-                moviesData[i] = reqData[1];
+                moviesData[i] = reqData[2];
             }
 
             loadingIndicator.setVisibility(View.INVISIBLE);
