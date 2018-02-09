@@ -2,17 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/popular"
-        android:title="Popular"
+        android:id="@+id/addAsFav"
+        android:title="ADD AS FAVORITE"
         android:orderInCategory="1"
-        app:showAsAction="never" />
+        android:icon="@drawable/ic_favorite_white_24dp"
+        app:showAsAction="always"/>
     <item
-        android:id="@+id/top_rated"
-        android:title="Top Rated"
-        android:orderInCategory="2"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/showFavFromHome"
+        android:id="@+id/showFav"
         android:title="Show Favorites"
         android:orderInCategory="1"
         app:showAsAction="never" />

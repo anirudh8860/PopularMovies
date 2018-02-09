@@ -51,7 +51,8 @@ public class MovieJsonUtils {
                 plot = movieObject.getString(PLOT);
                 rating = movieObject.getString(RATING);
                 releaseDate = movieObject.getString(RELEASE_DATE);
-                parsedMovieData[i] =id
+                parsedMovieData[i] =i
+                        +"="+id
                         +"="+title
                         +"="+IMAGE_URL+posterPath
                         +"="+plot

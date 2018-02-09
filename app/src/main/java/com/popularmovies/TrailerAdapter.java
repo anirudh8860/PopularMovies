@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,7 @@ public class TrailerAdapter extends ArrayAdapter{
 
         trailerCountView = convertView.findViewById(R.id.trailer_text);
         trailerCountView.setText("Trailer " + String.valueOf(position+1));
+        Log.d("Trailer", String.valueOf(position+1));
         trailerCountView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

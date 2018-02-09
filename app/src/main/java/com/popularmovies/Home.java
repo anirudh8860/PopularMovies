@@ -96,6 +96,12 @@ public class Home extends AppCompatActivity {
             showTopRatedMovies();
             return true;
         }
+        if (id == R.id.showFavFromHome){
+            Intent favIntent = new Intent(this, Favorites.class);
+            startActivity(favIntent);
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -142,7 +148,7 @@ public class Home extends AppCompatActivity {
 //                    for (int p = 0; p < reqData.length; p++)
 //                        Log.d("URL", p+":"+reqData[p]);
 //                    Log.d("URL", reqData[1]);
-                moviesData[i] = reqData[2];
+                moviesData[i] = reqData[3];
             }
 
             loadingIndicator.setVisibility(View.INVISIBLE);
