@@ -90,8 +90,7 @@ public class MovieDetails extends AppCompatActivity {
                 if (cursor.getCount() != 0) {
                     Toast.makeText(this, "Already in Favories", Toast.LENGTH_LONG).show();
                 }
-                else
-                    onClickAddTask();
+                else onClickAddTask();
                 cursor.close();
                 break;
 
@@ -116,10 +115,10 @@ public class MovieDetails extends AppCompatActivity {
         ContentValues contentValues = new ContentValues();
 
         //contentValues.put(MovieContract.MovieEntry._ID, splitMovieDetails[0]);
-        //contentValues.put(MovieContract.MovieEntry.MOVIE_IMAGE, splitMovieDetails[3]);
         contentValues.put(MovieContract.MovieEntry.MOVIE_ID, splitMovieDetails[1]);
         contentValues.put(MovieContract.MovieEntry.MOVIE_NAME, splitMovieDetails[2]);
         contentValues.put(MovieContract.MovieEntry.MOVIE_YEAR, splitMovieDetails[6]);
+        //contentValues.put(MovieContract.MovieEntry.MOVIE_IMAGE, splitMovieDetails[3]);
 
         Uri uri = getContentResolver().insert(MovieContract.MovieEntry.CONTENT_URI, contentValues);
         if (uri != null)

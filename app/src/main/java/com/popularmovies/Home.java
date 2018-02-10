@@ -7,13 +7,13 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -21,23 +21,24 @@ import com.popularmovies.fav.Favorites;
 
 import java.net.URL;
 
-public class Home extends AppCompatActivity {
+public class Home extends AppCompatActivity{
 
     private final String POPULAR_URL = "http://api.themoviedb.org/3/movie/popular";
     private final String TOP_RATED_URL = "http://api.themoviedb.org/3/movie/top_rated";
 
     private String[] outputArray, moviesData;
-    GridView gridView;
     private ProgressBar loadingIndicator;
     URL popularMovieUrl, topRatedMovieUrl;
     TextView notConnectedText;
+    RecyclerView recyclerView;
+    MoviesDataAdapter moviesDataAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        gridView = (GridView) findViewById(R.id.movies_grid_view);
+        recyclerView = (RecyclerView) findViewById(R.id.movies_recycler_view);
         loadingIndicator = (ProgressBar) findViewById(R.id.loading_indicator);
         notConnectedText = (TextView) findViewById(R.id.notConnectedText);
 
@@ -45,15 +46,7 @@ public class Home extends AppCompatActivity {
         topRatedMovieUrl = MovieNetworkUtils.buildUrl(TOP_RATED_URL);
 
         showPopularMovies();
-
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent movieDetailsIntent = new Intent(Home.this, MovieDetails.class);
-                movieDetailsIntent.putExtra("movie_data", outputArray[position]);
-                startActivity(movieDetailsIntent);
-            }
-        });
+        recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
     }
 
     public void showPopularMovies(){
@@ -63,7 +56,7 @@ public class Home extends AppCompatActivity {
         }
         else {
             notConnectedText.setVisibility(View.VISIBLE);
-            gridView.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.GONE);
         }
     }
 
@@ -74,7 +67,7 @@ public class Home extends AppCompatActivity {
         }
         else {
             notConnectedText.setVisibility(View.VISIBLE);
-            gridView.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.GONE);
         }
     }
 
@@ -135,7 +128,7 @@ public class Home extends AppCompatActivity {
         @Override
         protected void onPostExecute(String[] movieJsonArray) {
             super.onPostExecute(movieJsonArray);
-            gridView.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.VISIBLE);
             moviesData = new String[movieJsonArray.length];
             outputArray = new String[movieJsonArray.length];
             outputArray = movieJsonArray;
@@ -155,7 +148,8 @@ public class Home extends AppCompatActivity {
             for (int i = 0; i < moviesData.length; i++)
                 Log.d("URL"+i, moviesData[i]);
 
-            gridView.setAdapter(new MoviesDataAdapter(Home.this, moviesData));
+            moviesDataAdapter = new MoviesDataAdapter(getApplicationContext(), moviesData, outputArray);
+            recyclerView.setAdapter(moviesDataAdapter);
         }
     }
 }
