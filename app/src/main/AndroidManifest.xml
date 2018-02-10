@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".MovieDetails" />
-        <activity android:name=".Favorites"></activity>
+        <activity android:name=".fav.Favorites"></activity>
         <provider
             android:authorities="com.popularmovies"
             android:name="com.popularmovies.data.MovieContentProvider"

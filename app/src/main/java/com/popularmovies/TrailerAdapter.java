@@ -52,7 +52,6 @@ public class TrailerAdapter extends ArrayAdapter{
 
     private void openTrailer(String id){
         try {
-
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube://" + id));
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);

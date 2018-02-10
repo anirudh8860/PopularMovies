@@ -1,8 +1,7 @@
-package com.popularmovies;
+package com.popularmovies.fav;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Movie;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.popularmovies.R;
 import com.popularmovies.data.MovieContract;
 
 /**
@@ -24,11 +24,12 @@ public class FavMoviesAdapter extends RecyclerView.Adapter<FavMoviesAdapter.FavV
     private final LayoutInflater inflater;
 
     class FavViewHolder extends RecyclerView.ViewHolder{
-        public final TextView favMovieName;
+        public final TextView favMovieName, favMovieRelYear;
 
         public FavViewHolder(View itemView) {
             super(itemView);
             favMovieName = (TextView) itemView.findViewById(R.id.fav_movie_name);
+            favMovieRelYear = (TextView) itemView.findViewById(R.id.fav_movie_year);
         }
     }
 
@@ -53,8 +54,12 @@ public class FavMoviesAdapter extends RecyclerView.Adapter<FavMoviesAdapter.FavV
                 int movieIndex = cursor.getColumnIndex(MovieContract.MovieEntry.MOVIE_NAME);
                 String movieName = cursor.getString(movieIndex);
 
+                int movieYearIndex = cursor.getColumnIndex(MovieContract.MovieEntry.MOVIE_YEAR);
+                String movieYear = cursor.getString(movieYearIndex);
+
                 holder.itemView.setTag(id);
                 holder.favMovieName.setText(movieName);
+                holder.favMovieRelYear.setText(movieYear.substring(0,4));
             }
             else {
                 holder.favMovieName.setText("Movie name cannot be displayed ");

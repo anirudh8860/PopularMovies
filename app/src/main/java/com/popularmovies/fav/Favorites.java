@@ -1,4 +1,4 @@
-package com.popularmovies;
+package com.popularmovies.fav;
 
 import android.database.Cursor;
 import android.net.Uri;
@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 
+import com.popularmovies.R;
 import com.popularmovies.data.MovieContract;
 
 
@@ -32,8 +33,6 @@ public class Favorites extends AppCompatActivity implements LoaderManager.Loader
 
         favRecyclerView.setAdapter(favMoviesAdapter);
         favRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override

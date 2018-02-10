@@ -17,9 +17,9 @@ import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import java.io.IOException;
+import com.popularmovies.fav.Favorites;
+
 import java.net.URL;
-import java.util.Arrays;
 
 public class Home extends AppCompatActivity {
 

@@ -4,14 +4,26 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/fav_movie_name"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        android:text="SAMPLE TEXT"
-        android:layout_gravity="center"/>
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/fav_movie_name"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:text="SAMPLE TEXT"
+            android:layout_gravity="center"/>
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:textSize="25sp"
+            android:text="2000"
+            android:gravity="end"
+            android:id="@+id/fav_movie_year"/>
+    </LinearLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"

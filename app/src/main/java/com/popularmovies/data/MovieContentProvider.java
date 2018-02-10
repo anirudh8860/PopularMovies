@@ -81,7 +81,7 @@ public class MovieContentProvider extends ContentProvider {
                 if (id >= 0)
                     outputUri = ContentUris.withAppendedId(uri, id);
                 else
-                    throw new android.database.SQLException("Failed to insert row" + uri);
+                    throw new android.database.SQLException("Failed to insert row " + uri);
                 break;
             default:
                 throw new UnsupportedOperationException("Not yet implemented");
