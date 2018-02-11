@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,37 +18,51 @@ import android.widget.TextView;
  * Created by anirudhsohil on 08/02/18.
  */
 
-public class TrailerAdapter extends ArrayAdapter{
+public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerViewHolder>{
 
     Context context;
     String[] videoIds;
     LayoutInflater inflater;
 
     public TrailerAdapter(Context context, String[] videoIds){
-        super(context, R.layout.trailer_layout, videoIds);
         this.context = context;
         this.videoIds = videoIds;
         inflater = LayoutInflater.from(context);
     }
 
-    @NonNull
     @Override
-    public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        TextView trailerCountView;
-        if (convertView == null)
-            convertView = inflater.inflate(R.layout.trailer_layout, parent, false);
+    public TrailerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = inflater.inflate(R.layout.trailer_layout, parent, false);
+        return new TrailerViewHolder(view);
+    }
 
-        trailerCountView = convertView.findViewById(R.id.trailer_text);
-        trailerCountView.setText("Trailer " + String.valueOf(position+1));
-        Log.d("Trailer", String.valueOf(position+1));
-        trailerCountView.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onBindViewHolder(TrailerViewHolder holder, final int position) {
+        holder.videoText.setText("Trailer "+ (position+1));
+        holder.videoText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openTrailer(videoIds[position]);
             }
         });
+    }
 
-        return convertView;
+    @Override
+    public int getItemCount() {
+        if (videoIds != null)
+            return videoIds.length;
+        else
+            return 0;
+    }
+
+    public class TrailerViewHolder extends RecyclerView.ViewHolder{
+
+        final TextView videoText;
+
+        public TrailerViewHolder(View itemView) {
+            super(itemView);
+            videoText = (TextView) itemView.findViewById(R.id.trailer_text);
+        }
     }
 
     private void openTrailer(String id){

@@ -8,6 +8,8 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -26,29 +28,24 @@ import java.net.URL;
 
 public class MovieDetails extends AppCompatActivity {
 
-    ImageView posterView;
-    TextView title, rating, releaseDate, plot;
-    ListView trailerList, reviewList;
     LinearLayout trailerListToLinear, reviewListToLinear;
     String movieDetails;
-    private final String BASE_URL = "http://api.themoviedb.org/3/movie/"
-            , APPEND_REVIEWS = "/reviews"
-            , APPEND_TRAILERS = "/videos";
-    String[] splitMovieDetails;
+    private final String BASE_URL = "http://api.themoviedb.org/3/movie/",
+            APPEND_REVIEWS = "/reviews",
+            APPEND_TRAILERS = "/videos";
+    String[] splitMovieDetails,
+            reviewVal = new String[0],
+            trailerVal = new String[0];
     ReviewAdapter reviewAdapter;
+    RecyclerView recyclerView;
+    MovieDetailsAdapter movieDetailsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_details);
 
-        posterView = (ImageView) findViewById(R.id.poster);
-        title = (TextView) findViewById(R.id.title);
-        rating = (TextView) findViewById(R.id.rating);
-        releaseDate = (TextView) findViewById(R.id.release_date);
-        plot = (TextView) findViewById(R.id.plot);
-        trailerList = (ListView) findViewById(R.id.trailer_list);
-        reviewList = (ListView) findViewById(R.id.review_list);
+        recyclerView = (RecyclerView) findViewById(R.id.movie_details_recycler_view);
 
         Intent movieDetailsIntent = getIntent();
         movieDetails = movieDetailsIntent.getStringExtra("movie_data");
@@ -56,16 +53,11 @@ public class MovieDetails extends AppCompatActivity {
         splitMovieDetails = movieDetails.split("=");
 //        for (int i = 0; i < splitMovieDetails.length; i++)
 //            Log.d("Movie Details", splitMovieDetails[i]);
+        RecyclerView.LayoutManager manager = new LinearLayoutManager(this);
+        manager.setAutoMeasureEnabled(true);
+        recyclerView.setLayoutManager(manager);
+        recyclerView.setNestedScrollingEnabled(true);
 
-        Picasso.with(getApplicationContext())
-                .load(splitMovieDetails[3])
-                .placeholder(R.drawable.pacman)
-                .into(posterView);
-
-        title.setText(splitMovieDetails[2]);
-        plot.setText(splitMovieDetails[4]);
-        rating.setText(splitMovieDetails[5]);
-        releaseDate.setText(splitMovieDetails[6]);
         new GetReviews().execute(MovieNetworkUtils.buildUrl(BASE_URL + splitMovieDetails[1] + APPEND_REVIEWS));
         new GetTrailers().execute(MovieNetworkUtils.buildUrl(BASE_URL + splitMovieDetails[1] + APPEND_TRAILERS));
     }
@@ -144,13 +136,17 @@ public class MovieDetails extends AppCompatActivity {
         @Override
         protected void onPostExecute(String[] strings) {
             super.onPostExecute(strings);
-            reviewAdapter = new ReviewAdapter(getApplicationContext(), strings);
-            LayoutInflater inflater = LayoutInflater.from(getApplicationContext());
             for (int i = 0; i < strings.length; i++) {
                 Log.d("Strings", strings[i]);
             }
+            reviewVal = strings;
 
-            reviewList.setAdapter(new ReviewAdapter(getApplicationContext(), strings));
+//            movieDetailsAdapter = new MovieDetailsAdapter(
+//                    getApplicationContext(),
+//                    splitMovieDetails,
+//                    reviewVal,
+//                    trailerVal);
+//            recyclerView.setAdapter(movieDetailsAdapter);
             //ShowFullList.setListViewHeightBasedOnItems(reviewList);
         }
     }
@@ -174,8 +170,17 @@ public class MovieDetails extends AppCompatActivity {
         @Override
         protected void onPostExecute(String[] strings) {
             super.onPostExecute(strings);
-            trailerList.setAdapter(new TrailerAdapter(getApplicationContext(), strings));
-            ShowFullList.setListViewHeightBasedOnItems(trailerList);
+            for (int i = 0; i < strings.length; i++) {
+                Log.d("Strings", strings[i]);
+            }
+            trailerVal = strings;
+            movieDetailsAdapter = new MovieDetailsAdapter(
+                    getApplicationContext(),
+                    splitMovieDetails,
+                    reviewVal,
+                    trailerVal);
+            recyclerView.setAdapter(movieDetailsAdapter);
+            //ShowFullList.setListViewHeightBasedOnItems(trailerList);
         }
     }
 
