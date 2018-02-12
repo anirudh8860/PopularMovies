@@ -1,4 +1,4 @@
-package com.popularmovies;
+package com.popularmovies.details;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -11,24 +11,20 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.popularmovies.MovieJsonUtils;
+import com.popularmovies.MovieNetworkUtils;
+import com.popularmovies.R;
 import com.popularmovies.fav.Favorites;
 import com.popularmovies.data.MovieContract;
-import com.squareup.picasso.Picasso;
 
 import java.net.URL;
 
 public class MovieDetails extends AppCompatActivity {
 
-    LinearLayout trailerListToLinear, reviewListToLinear;
     String movieDetails;
     private final String BASE_URL = "http://api.themoviedb.org/3/movie/",
             APPEND_REVIEWS = "/reviews",
@@ -36,7 +32,6 @@ public class MovieDetails extends AppCompatActivity {
     String[] splitMovieDetails,
             reviewVal = new String[0],
             trailerVal = new String[0];
-    ReviewAdapter reviewAdapter;
     RecyclerView recyclerView;
     MovieDetailsAdapter movieDetailsAdapter;
 
@@ -111,6 +106,7 @@ public class MovieDetails extends AppCompatActivity {
         contentValues.put(MovieContract.MovieEntry.MOVIE_NAME, splitMovieDetails[2]);
         contentValues.put(MovieContract.MovieEntry.MOVIE_YEAR, splitMovieDetails[6]);
         contentValues.put(MovieContract.MovieEntry.MOVIE_IMAGE, splitMovieDetails[3]);
+        contentValues.put(MovieContract.MovieEntry.MOVIE_DATA, movieDetails);
 
         Uri uri = getContentResolver().insert(MovieContract.MovieEntry.CONTENT_URI, contentValues);
         if (uri != null)

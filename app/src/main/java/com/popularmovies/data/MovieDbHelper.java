@@ -23,7 +23,8 @@ public class MovieDbHelper extends SQLiteOpenHelper{
                 MovieContract.MovieEntry.MOVIE_ID + " REAL NOT NULL, " +
                 MovieContract.MovieEntry.MOVIE_NAME + " TEXT NOT NULL, " +
                 MovieContract.MovieEntry.MOVIE_YEAR + " TEXT NOT NULL, " +
-                MovieContract.MovieEntry.MOVIE_IMAGE + " TEXT NOT NULL);";
+                MovieContract.MovieEntry.MOVIE_IMAGE + " TEXT NOT NULL, " +
+                MovieContract.MovieEntry.MOVIE_DATA + " TEXT NOT NULL);";
 
         db.execSQL(CREATE_TABLE);
     }

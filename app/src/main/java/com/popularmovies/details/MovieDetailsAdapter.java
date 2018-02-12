@@ -1,4 +1,4 @@
-package com.popularmovies;
+package com.popularmovies.details;
 
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
@@ -7,9 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
+import com.popularmovies.R;
 import com.squareup.picasso.Picasso;
 
 /**

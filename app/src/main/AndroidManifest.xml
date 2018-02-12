@@ -20,8 +20,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MovieDetails" />
-        <activity android:name=".fav.Favorites"></activity>
+        <activity
+            android:name=".details.MovieDetails"
+            android:label="Movie Details"/>
+        <activity
+            android:name=".fav.Favorites"
+            android:label="Favourites"/>
         <provider
             android:authorities="com.popularmovies"
             android:name="com.popularmovies.data.MovieContentProvider"
