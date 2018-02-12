@@ -2,4 +2,7 @@
 <resources>
     <dimen name="fav_height">160dp</dimen>
     <dimen name="fav_image_width">110dp</dimen>
+    <dimen name="title_left_margin">30dp</dimen>
+    <dimen name="movie_info_top_margin">10dp</dimen>
+    <dimen name="movie_info_left_margin">25dp</dimen>
 </resources>

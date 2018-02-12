@@ -5,4 +5,6 @@
     <string name="conn_error_str">CONNECT TO INTERNET TO DISPLAY MOVIES</string>
     <string name="reviews">Reviews:</string>
     <string name="trailer">Trailers:</string>
+    <string name="del_fav_help">Swipe to remove a movie from favorites</string>
+    <string name="sample_text">SAMPLE TEXT</string>
 </resources>

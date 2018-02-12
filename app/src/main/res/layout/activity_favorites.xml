@@ -10,7 +10,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Swipe to remove a movie from favorites"
+        android:text="@string/del_fav_help"
         android:id="@+id/info"
         android:gravity="center"
         android:background="#CDCCCC"
