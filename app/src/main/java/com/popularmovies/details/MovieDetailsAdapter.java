@@ -44,7 +44,7 @@ public class MovieDetailsAdapter extends RecyclerView.Adapter<MovieDetailsAdapte
 
         holder.title.setText(movieDetails[2]);
         holder.plot.setText(movieDetails[4]);
-        holder.rating.setText(movieDetails[5]);
+        holder.rating.setText(movieDetails[5]+"/10");
         holder.releaseDate.setText(movieDetails[6]);
 
         ReviewAdapter reviewAdapter = new ReviewAdapter(context, reviewVal);

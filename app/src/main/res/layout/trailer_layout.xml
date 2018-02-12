@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_marginTop="15dp">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,10 +17,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/trailer_text"
-            android:textSize="20sp"/>
+            android:layout_gravity="center"
+            android:textSize="15sp"/>
     </LinearLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#CDCCCC"/>
+        android:background="#CDCCCC"
+        android:layout_marginTop="15dp"/>
 </LinearLayout>
