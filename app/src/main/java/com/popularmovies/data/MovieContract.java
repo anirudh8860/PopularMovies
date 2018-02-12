@@ -19,6 +19,6 @@ public class MovieContract {
         public static final String MOVIE_ID = "movie_id";
         public static final String MOVIE_NAME = "title";
         public static final String MOVIE_YEAR = "movie_year";
-        //public static final String MOVIE_IMAGE = "image_url";
+        public static final String MOVIE_IMAGE = "image_url";
     }
 }

@@ -8,24 +8,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/fav_movie_name"
-            android:textSize="25sp"
-            android:textStyle="bold"
-            android:text="SAMPLE TEXT"
-            android:layout_gravity="center"/>
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:textSize="25sp"
-            android:text="2000"
-            android:gravity="end"
-            android:id="@+id/fav_movie_year"/>
+    <ImageView
+        android:layout_width="@dimen/fav_image_width"
+        android:layout_height="@dimen/fav_height"
+        android:id="@+id/fav_poster"
+        android:adjustViewBounds="true"
+        android:src="@drawable/pacman"/>
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/fav_height"
+        android:id="@+id/fav_movie_name"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:text="SAMPLE TEXT"
+        android:gravity="center"/>
     </LinearLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="2dp"
         android:background="#CDCCCC"/>
 </LinearLayout>

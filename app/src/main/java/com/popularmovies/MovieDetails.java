@@ -110,7 +110,7 @@ public class MovieDetails extends AppCompatActivity {
         contentValues.put(MovieContract.MovieEntry.MOVIE_ID, splitMovieDetails[1]);
         contentValues.put(MovieContract.MovieEntry.MOVIE_NAME, splitMovieDetails[2]);
         contentValues.put(MovieContract.MovieEntry.MOVIE_YEAR, splitMovieDetails[6]);
-        //contentValues.put(MovieContract.MovieEntry.MOVIE_IMAGE, splitMovieDetails[3]);
+        contentValues.put(MovieContract.MovieEntry.MOVIE_IMAGE, splitMovieDetails[3]);
 
         Uri uri = getContentResolver().insert(MovieContract.MovieEntry.CONTENT_URI, contentValues);
         if (uri != null)

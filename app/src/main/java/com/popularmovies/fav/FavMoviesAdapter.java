@@ -7,10 +7,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.popularmovies.R;
 import com.popularmovies.data.MovieContract;
+import com.squareup.picasso.Picasso;
 
 /**
  * Created by anirudhsohil on 09/02/18.
@@ -24,12 +26,15 @@ public class FavMoviesAdapter extends RecyclerView.Adapter<FavMoviesAdapter.FavV
     private final LayoutInflater inflater;
 
     class FavViewHolder extends RecyclerView.ViewHolder{
-        public final TextView favMovieName, favMovieRelYear;
+        final TextView favMovieName;
+        //, favMovieRelYear;
+        final ImageView favPoster;
 
         public FavViewHolder(View itemView) {
             super(itemView);
             favMovieName = (TextView) itemView.findViewById(R.id.fav_movie_name);
-            favMovieRelYear = (TextView) itemView.findViewById(R.id.fav_movie_year);
+            //favMovieRelYear = (TextView) itemView.findViewById(R.id.fav_movie_year);
+            favPoster = (ImageView) itemView.findViewById(R.id.fav_poster);
         }
     }
 
@@ -54,12 +59,20 @@ public class FavMoviesAdapter extends RecyclerView.Adapter<FavMoviesAdapter.FavV
                 int movieIndex = cursor.getColumnIndex(MovieContract.MovieEntry.MOVIE_NAME);
                 String movieName = cursor.getString(movieIndex);
 
-                int movieYearIndex = cursor.getColumnIndex(MovieContract.MovieEntry.MOVIE_YEAR);
-                String movieYear = cursor.getString(movieYearIndex);
+//                int movieYearIndex = cursor.getColumnIndex(MovieContract.MovieEntry.MOVIE_YEAR);
+//                String movieYear = cursor.getString(movieYearIndex);
+
+                int favPosterIndex = cursor.getColumnIndex(MovieContract.MovieEntry.MOVIE_IMAGE);
+                String favMovieImageUrl = cursor.getString(favPosterIndex);
 
                 holder.itemView.setTag(id);
                 holder.favMovieName.setText(movieName);
-                holder.favMovieRelYear.setText(movieYear.substring(0,4));
+                //holder.favMovieRelYear.setText(movieYear.substring(0,4));
+
+                Picasso.with(context)
+                        .load(favMovieImageUrl)
+                        .placeholder(R.drawable.pacman)
+                        .into(holder.favPoster);
             }
             else {
                 holder.favMovieName.setText("Movie name cannot be displayed ");
