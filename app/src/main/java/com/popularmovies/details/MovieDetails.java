@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -34,6 +35,7 @@ public class MovieDetails extends AppCompatActivity {
             trailerVal = new String[0];
     RecyclerView recyclerView;
     MovieDetailsAdapter movieDetailsAdapter;
+    String RECYCLE_VIEW_POSITION = "curr_pos";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,10 +53,25 @@ public class MovieDetails extends AppCompatActivity {
         RecyclerView.LayoutManager manager = new LinearLayoutManager(this);
         manager.setAutoMeasureEnabled(true);
         recyclerView.setLayoutManager(manager);
-        recyclerView.setNestedScrollingEnabled(true);
 
         new GetReviews().execute(MovieNetworkUtils.buildUrl(BASE_URL + splitMovieDetails[1] + APPEND_REVIEWS));
         new GetTrailers().execute(MovieNetworkUtils.buildUrl(BASE_URL + splitMovieDetails[1] + APPEND_TRAILERS));
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Parcelable currState = recyclerView.getLayoutManager().onSaveInstanceState();
+        outState.putParcelable(RECYCLE_VIEW_POSITION, currState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if (savedInstanceState != null){
+            Parcelable savedRecyclerLayoutState = savedInstanceState.getParcelable(RECYCLE_VIEW_POSITION);
+            recyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerLayoutState);
+        }
     }
 
     @Override

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -32,6 +33,7 @@ public class Home extends AppCompatActivity{
     TextView notConnectedText;
     RecyclerView recyclerView;
     MoviesDataAdapter moviesDataAdapter;
+    String RECYCLE_VIEW_POSITION = "curr_pos";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,22 @@ public class Home extends AppCompatActivity{
 
         showPopularMovies();
         recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Parcelable currState = recyclerView.getLayoutManager().onSaveInstanceState();
+        outState.putParcelable(RECYCLE_VIEW_POSITION, currState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if (savedInstanceState != null){
+            Parcelable savedRecyclerLayoutState = savedInstanceState.getParcelable(RECYCLE_VIEW_POSITION);
+            recyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerLayoutState);
+        }
     }
 
     public void showPopularMovies(){

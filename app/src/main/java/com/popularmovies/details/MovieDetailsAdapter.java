@@ -51,6 +51,7 @@ public class MovieDetailsAdapter extends RecyclerView.Adapter<MovieDetailsAdapte
         RecyclerView.LayoutManager reviewlayout = new LinearLayoutManager(context);
         reviewlayout.setAutoMeasureEnabled(true);
         holder.reviewList.setLayoutManager(reviewlayout);
+        holder.reviewList.setFocusable(false);
         holder.reviewList.setAdapter(reviewAdapter);
 
         TrailerAdapter trailerAdapter = new TrailerAdapter(context, trailerVal);
@@ -58,6 +59,7 @@ public class MovieDetailsAdapter extends RecyclerView.Adapter<MovieDetailsAdapte
         reviewlayout.setAutoMeasureEnabled(true);
         holder.trailerList.setLayoutManager(trailerlayout);
         holder.trailerList.setAdapter(trailerAdapter);
+        holder.trailerList.setFocusable(false);
     }
 
     @Override
