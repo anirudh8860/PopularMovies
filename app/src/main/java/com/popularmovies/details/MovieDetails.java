@@ -2,8 +2,11 @@ package com.popularmovies.details;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Parcelable;
@@ -14,6 +17,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.popularmovies.MovieJsonUtils;
@@ -36,6 +41,7 @@ public class MovieDetails extends AppCompatActivity {
     RecyclerView recyclerView;
     MovieDetailsAdapter movieDetailsAdapter;
     String RECYCLE_VIEW_POSITION = "curr_pos";
+    TextView notConnectedText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +49,7 @@ public class MovieDetails extends AppCompatActivity {
         setContentView(R.layout.activity_movie_details);
 
         recyclerView = (RecyclerView) findViewById(R.id.movie_details_recycler_view);
+        notConnectedText = (TextView) findViewById(R.id.notConnectedTextDetails);
 
         Intent movieDetailsIntent = getIntent();
         movieDetails = movieDetailsIntent.getStringExtra("movie_data");
@@ -52,10 +59,27 @@ public class MovieDetails extends AppCompatActivity {
 //            Log.d("Movie Details", splitMovieDetails[i]);
         RecyclerView.LayoutManager manager = new LinearLayoutManager(this);
         manager.setAutoMeasureEnabled(true);
+        showMovieDetails();
         recyclerView.setLayoutManager(manager);
+    }
 
-        new GetReviews().execute(MovieNetworkUtils.buildUrl(BASE_URL + splitMovieDetails[1] + APPEND_REVIEWS));
-        new GetTrailers().execute(MovieNetworkUtils.buildUrl(BASE_URL + splitMovieDetails[1] + APPEND_TRAILERS));
+    private void showMovieDetails() {
+        if (isOnline()){
+            notConnectedText.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+            new GetReviews().execute(MovieNetworkUtils.buildUrl(BASE_URL + splitMovieDetails[1] + APPEND_REVIEWS));
+            new GetTrailers().execute(MovieNetworkUtils.buildUrl(BASE_URL + splitMovieDetails[1] + APPEND_TRAILERS));
+        }
+        else {
+            notConnectedText.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+        }
+    }
+
+    public boolean isOnline() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = connectivityManager.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
     @Override

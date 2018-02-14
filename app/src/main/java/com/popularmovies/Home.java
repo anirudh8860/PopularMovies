@@ -2,6 +2,7 @@ package com.popularmovies;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -26,6 +27,9 @@ public class Home extends AppCompatActivity{
 
     private final String POPULAR_URL = "http://api.themoviedb.org/3/movie/popular";
     private final String TOP_RATED_URL = "http://api.themoviedb.org/3/movie/top_rated";
+    private final String CURR_URL_KEY = "curr_url";
+    private final String CURR_MOVIE_DATA_KEY = "movie_data";
+    private final String CURR_OP_DATA_KEY = "data_key";
 
     private String[] outputArray, moviesData;
     private ProgressBar loadingIndicator;
@@ -33,7 +37,7 @@ public class Home extends AppCompatActivity{
     TextView notConnectedText;
     RecyclerView recyclerView;
     MoviesDataAdapter moviesDataAdapter;
-    String RECYCLE_VIEW_POSITION = "curr_pos";
+    private String RECYCLE_VIEW_POSITION = "curr_pos", CURR_URL_VAL = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,15 +51,23 @@ public class Home extends AppCompatActivity{
         popularMovieUrl = MovieNetworkUtils.buildUrl(POPULAR_URL);
         topRatedMovieUrl = MovieNetworkUtils.buildUrl(TOP_RATED_URL);
 
-        showPopularMovies();
+        if (CURR_URL_VAL.equals(""))
+            CURR_URL_VAL = POPULAR_URL;
+
+        if (savedInstanceState == null)
+            showMovies(CURR_URL_VAL);
+
         recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
         Parcelable currState = recyclerView.getLayoutManager().onSaveInstanceState();
         outState.putParcelable(RECYCLE_VIEW_POSITION, currState);
+        outState.putString(CURR_URL_KEY, CURR_URL_VAL);
+        outState.putStringArray(CURR_MOVIE_DATA_KEY, moviesData);
+        outState.putStringArray(CURR_OP_DATA_KEY, outputArray);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -63,25 +75,21 @@ public class Home extends AppCompatActivity{
         super.onRestoreInstanceState(savedInstanceState);
         if (savedInstanceState != null){
             Parcelable savedRecyclerLayoutState = savedInstanceState.getParcelable(RECYCLE_VIEW_POSITION);
+            CURR_URL_VAL = savedInstanceState.getString(CURR_URL_KEY);
+            moviesData = savedInstanceState.getStringArray(CURR_MOVIE_DATA_KEY);
+            outputArray = savedInstanceState.getStringArray(CURR_OP_DATA_KEY);
+
             recyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerLayoutState);
+            moviesDataAdapter = new MoviesDataAdapter(getApplicationContext(), moviesData, outputArray);
+            recyclerView.setAdapter(moviesDataAdapter);
         }
     }
 
-    public void showPopularMovies(){
+    public void showMovies(String moviesUrl){
         if (isOnline()) {
             notConnectedText.setVisibility(View.GONE);
-            new FetchMovieClass().execute(popularMovieUrl);
-        }
-        else {
-            notConnectedText.setVisibility(View.VISIBLE);
-            recyclerView.setVisibility(View.GONE);
-        }
-    }
-
-    public void showTopRatedMovies(){
-        if (isOnline()) {
-            notConnectedText.setVisibility(View.GONE);
-            new FetchMovieClass().execute(topRatedMovieUrl);
+            URL url = MovieNetworkUtils.buildUrl(moviesUrl);
+            new FetchMovieClass().execute(url);
         }
         else {
             notConnectedText.setVisibility(View.VISIBLE);
@@ -100,11 +108,13 @@ public class Home extends AppCompatActivity{
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.popular){
-            showPopularMovies();
+            CURR_URL_VAL = POPULAR_URL;
+            showMovies(POPULAR_URL);
             return true;
         }
         if (id == R.id.top_rated){
-            showTopRatedMovies();
+            CURR_URL_VAL = TOP_RATED_URL;
+            showMovies(TOP_RATED_URL);
             return true;
         }
         if (id == R.id.showFavFromHome){
@@ -112,7 +122,6 @@ public class Home extends AppCompatActivity{
             startActivity(favIntent);
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -163,8 +172,7 @@ public class Home extends AppCompatActivity{
             }
 
             loadingIndicator.setVisibility(View.INVISIBLE);
-            for (int i = 0; i < moviesData.length; i++)
-                Log.d("URL"+i, moviesData[i]);
+//              Log.d("URL"+i, moviesData[i]);
 
             moviesDataAdapter = new MoviesDataAdapter(getApplicationContext(), moviesData, outputArray);
             recyclerView.setAdapter(moviesDataAdapter);

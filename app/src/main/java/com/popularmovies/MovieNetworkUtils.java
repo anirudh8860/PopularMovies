@@ -30,7 +30,6 @@ public class MovieNetworkUtils {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-        Log.d("URL", url.toString());
         return url;
     }
 

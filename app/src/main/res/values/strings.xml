@@ -7,4 +7,5 @@
     <string name="trailer">Trailers:</string>
     <string name="del_fav_help">Swipe to remove a movie from favorites</string>
     <string name="sample_text">SAMPLE TEXT</string>
+    <string name="not_connected_text_mov_details">CONNECT TO INTERNET TO DISPLAY DETAILS</string>
 </resources>

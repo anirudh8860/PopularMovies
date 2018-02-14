@@ -41,7 +41,7 @@ public class MovieJsonUtils {
             JSONArray movieJsonArray = movieJsonObject.getJSONArray(RESULTS);
             parsedMovieData = new String[movieJsonArray.length()];
             String id = "", posterPath = "", title = "", plot = "", rating = "", releaseDate = "";
-            Log.d("MovieArr", String.valueOf(movieJsonArray));
+            //Log.d("MovieArr", String.valueOf(movieJsonArray));
             for (int i = 0; i < movieJsonArray.length(); i++){
                 JSONObject movieObject = movieJsonArray.getJSONObject(i);
                 //Log.d("Object", String.valueOf(movieObject));
@@ -76,13 +76,13 @@ public class MovieJsonUtils {
             JSONArray reviewJsonArray = reviewJsonObject.getJSONArray(RESULTS);
             parsedReviewData = new String[reviewJsonArray.length()];
             String author = "", content = "";
-            Log.d("ReviewArr", String.valueOf(reviewJsonArray));
+            //Log.d("ReviewArr", String.valueOf(reviewJsonArray));
             for (int i = 0; i < reviewJsonArray.length(); i++){
                 JSONObject reviewObject = reviewJsonArray.getJSONObject(i);
                 author = reviewObject.getString(AUTHOR);
                 content = reviewObject.getString(CONTENT);
                 parsedReviewData[i] = author + "=" + content;
-                Log.d("DATA", parsedReviewData[i]);
+                //Log.d("DATA", parsedReviewData[i]);
             }
         }
 
@@ -101,12 +101,12 @@ public class MovieJsonUtils {
             JSONArray trailerJsonArray = trailerJsonObject.getJSONArray(RESULTS);
             parsedTrailerData = new String[trailerJsonArray.length()];
             String key = "";
-            Log.d("ReviewArr", String.valueOf(trailerJsonArray));
+            //Log.d("ReviewArr", String.valueOf(trailerJsonArray));
             for (int i = 0; i < trailerJsonArray.length(); i++){
                 JSONObject trailerObject = trailerJsonArray.getJSONObject(i);
                 key = trailerObject.getString(KEY);
                 parsedTrailerData[i] = key;
-                Log.d("VIDEO", parsedTrailerData[i]);
+                //Log.d("VIDEO", parsedTrailerData[i]);
             }
         }
 
